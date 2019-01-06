@@ -1,0 +1,1 @@
+COPY GameLogs FROM 'C:\Users\danco\Documents\Projects\retrosheet\data\modified\GL2018.csv' DELIMITER ',' CSV HEADER;
