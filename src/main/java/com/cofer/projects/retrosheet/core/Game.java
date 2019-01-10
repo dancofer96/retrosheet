@@ -1,6 +1,7 @@
 package com.cofer.projects.retrosheet.core;
 
 import com.cofer.projects.retrosheet.core.key.GamePK;
+import com.cofer.projects.retrosheet.core.query.GameQueries;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -10,10 +11,32 @@ import java.util.Objects;
 @NamedQueries(
         {
                 @NamedQuery(
-                        name = "com.cofer.projects.retrosheet.core.Game.findAll",
-                        query = "SELECT g FROM Game g"
+                        name = GameQueries.FIND_ALL,
+                        query = GameQueries.SELECT
+                ),
+                @NamedQuery(
+                        name = GameQueries.FIND_ALL_BY_HOME_TEAM,
+                        query = GameQueries.SELECT
+                            + "where g.homeTeam = :"
+                            + GameQueries.TEAM
+                ),
+                @NamedQuery(
+                        name = GameQueries.FIND_ALL_BY_AWAY_TEAM,
+                        query = GameQueries.SELECT
+                                + "where g.visitingTeam = :"
+                                + GameQueries.TEAM
+                ),
+                @NamedQuery(
+                        name = GameQueries.FIND_ALL_BY_TEAM,
+                        query = GameQueries.SELECT
+                                + "where g.visitingTeam = :"
+                                + GameQueries.TEAM
+                                + " or g.homeTeam = :"
+                                + GameQueries.TEAM
                 )
         })
+
+
 @IdClass(GamePK.class)
 public class Game {
     @Id

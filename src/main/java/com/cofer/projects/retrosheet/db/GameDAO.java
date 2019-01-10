@@ -1,6 +1,7 @@
 package com.cofer.projects.retrosheet.db;
 
 import com.cofer.projects.retrosheet.core.Game;
+import com.cofer.projects.retrosheet.core.query.GameQueries;
 import io.dropwizard.hibernate.AbstractDAO;
 
 import org.hibernate.SessionFactory;
@@ -24,7 +25,31 @@ public class GameDAO extends AbstractDAO<Game> {
 
     @SuppressWarnings("unchecked")
     public List<Game> findAll() {
-        return list((Query<Game>) namedQuery("com.cofer.projects.retrosheet.core.Game.findAll"));
+        return list((Query<Game>) namedQuery(GameQueries.FIND_ALL));
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Game> findAllByHomeTeam(String team) {
+        return list(
+                (Query<Game>) namedQuery(GameQueries.FIND_ALL_BY_HOME_TEAM)
+                .setParameter(GameQueries.TEAM, team)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Game> findAllByAwayTeam(String team) {
+        return list(
+                (Query<Game>) namedQuery(GameQueries.FIND_ALL_BY_AWAY_TEAM)
+                        .setParameter(GameQueries.TEAM, team)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Game> findAllByTeam(String team) {
+        return list(
+                (Query<Game>) namedQuery(GameQueries.FIND_ALL_BY_TEAM)
+                        .setParameter(GameQueries.TEAM, team)
+        );
     }
 }
 

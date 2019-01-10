@@ -7,10 +7,7 @@ import com.google.common.base.Optional;
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -30,5 +27,35 @@ public class GameResource {
     @UnitOfWork
     public List<Game> getAllGames() {
         return gameDAO.findAll();
+    }
+
+    @GET
+    @Timed
+    @Path("/{team}/home")
+    @UnitOfWork
+    public List<Game> getAllGamesByHomeTeam(
+            @PathParam("team") String team
+    ) {
+        return gameDAO.findAllByHomeTeam(team);
+    }
+
+    @GET
+    @Timed
+    @Path("/{team}/away")
+    @UnitOfWork
+    public List<Game> getAllGamesByAwayTeam(
+            @PathParam("team") String team
+    ) {
+        return gameDAO.findAllByAwayTeam(team);
+    }
+
+    @GET
+    @Timed
+    @Path("/{team}")
+    @UnitOfWork
+    public List<Game> getAllGamesByTeam(
+            @PathParam("team") String team
+    ) {
+        return gameDAO.findAllByTeam(team);
     }
 }
