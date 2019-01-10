@@ -71,7 +71,7 @@ public class GameResource {
                 game -> {
                     if (team.equals(game.getWinningTeam())) {
                         record.addWin();
-                    } else if (team.equals(game.getLoosingTeam())) {
+                    } else if (team.equals(game.getLosingTeam())) {
                         record.addLoss();
                     }
                 }

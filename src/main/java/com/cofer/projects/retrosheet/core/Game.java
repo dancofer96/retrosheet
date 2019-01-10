@@ -131,7 +131,7 @@ public class Game {
         }
     }
 
-    public String getLoosingTeam() {
+    public String getLosingTeam() {
         if (homeScore < visitingScore) {
             return homeTeam;
         } else if (visitingScore < homeScore) {
