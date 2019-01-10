@@ -1,16 +1,16 @@
 package com.cofer.projects.retrosheet.resources;
 
-import com.cofer.projects.retrosheet.api.Saying;
 import com.cofer.projects.retrosheet.core.Game;
+import com.cofer.projects.retrosheet.core.Record;
 import com.cofer.projects.retrosheet.db.GameDAO;
-import com.google.common.base.Optional;
+
 import com.codahale.metrics.annotation.Timed;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+
 @Path("/games")
 @Produces(MediaType.APPLICATION_JSON)
 public class GameResource {
@@ -57,5 +57,25 @@ public class GameResource {
             @PathParam("team") String team
     ) {
         return gameDAO.findAllByTeam(team);
+    }
+
+    @GET
+    @Timed
+    @Path("/{team}/record")
+    @UnitOfWork
+    public Record getRecordByTeam(
+            @PathParam("team") String team
+    ) {
+        Record record = new Record(team);
+        gameDAO.findAllByTeam(team).forEach(
+                game -> {
+                    if (team.equals(game.getWinningTeam())) {
+                        record.addWin();
+                    } else if (team.equals(game.getLoosingTeam())) {
+                        record.addLoss();
+                    }
+                }
+        );
+        return record;
     }
 }

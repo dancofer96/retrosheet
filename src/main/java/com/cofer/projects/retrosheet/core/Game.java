@@ -55,14 +55,22 @@ public class Game {
     @Column(name = "home_team", nullable = false)
     private String homeTeam;
 
+    @Column(name = "visiting_score", nullable = false)
+    private int visitingScore;
+
+    @Column(name = "home_score", nullable = false)
+    private int homeScore;
+
     public Game() {
     }
 
-    public Game(String gameDate, String gameNumber, String visitingTeam, String homeTeam) {
+    public Game(String gameDate, String gameNumber, String visitingTeam, String homeTeam, int visitingScore, int homeScore) {
         this.gameDate = gameDate;
         this.gameNumber = gameNumber;
         this.visitingTeam = visitingTeam;
         this.homeTeam = homeTeam;
+        this.visitingScore = visitingScore;
+        this.homeScore = homeScore;
     }
 
     public String getGameDate() {
@@ -96,6 +104,43 @@ public class Game {
     public void setHomeTeam(String homeTeam) {
         this.homeTeam = homeTeam;
     }
+
+    public int getVisitingScore() {
+        return visitingScore;
+    }
+
+    public void setVisitingScore(int visitingScore) {
+        this.visitingScore = visitingScore;
+    }
+
+    public int getHomeScore() {
+        return  homeScore;
+    }
+
+    public void setHomeScore(int homeScore) {
+        this.homeScore = homeScore;
+    }
+
+    public String getWinningTeam() {
+        if (homeScore > visitingScore) {
+            return homeTeam;
+        } else if (visitingScore > homeScore) {
+            return visitingTeam;
+        } else {
+            return null;
+        }
+    }
+
+    public String getLoosingTeam() {
+        if (homeScore < visitingScore) {
+            return homeTeam;
+        } else if (visitingScore < homeScore) {
+            return visitingTeam;
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
