@@ -64,18 +64,9 @@ public class GameResource {
     @Path("/{team}/record")
     @UnitOfWork
     public Record getRecordByTeam(
-            @PathParam("team") String team
+            @PathParam("team") String team,
+            @QueryParam("season") String season
     ) {
-        Record record = new Record(team);
-        gameDAO.findAllByTeam(team).forEach(
-                game -> {
-                    if (team.equals(game.getWinningTeam())) {
-                        record.addWin();
-                    } else if (team.equals(game.getLosingTeam())) {
-                        record.addLoss();
-                    }
-                }
-        );
-        return record;
+        return Record.calculateRecordForTeam(gameDAO.findAllByTeam(team), team, season);
     }
 }

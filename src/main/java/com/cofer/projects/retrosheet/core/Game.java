@@ -2,6 +2,7 @@ package com.cofer.projects.retrosheet.core;
 
 import com.cofer.projects.retrosheet.core.key.GamePK;
 import com.cofer.projects.retrosheet.core.query.GameQueries;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -41,24 +42,30 @@ import java.util.Objects;
 public class Game {
     @Id
     @Column(name = "game_date", nullable = false)
+    @JsonProperty("gameDate")
     private String gameDate;
 
     @Id
     @Column(name = "game_number", nullable = false)
+    @JsonProperty("gameNumber")
     private String gameNumber;
 
     @Id
     @Column(name = "visiting_team", nullable = false)
+    @JsonProperty("visitingTeam")
     private String visitingTeam;
 
     @Id
     @Column(name = "home_team", nullable = false)
+    @JsonProperty("homeTeam")
     private String homeTeam;
 
     @Column(name = "visiting_score", nullable = false)
+    @JsonProperty("visitingScore")
     private int visitingScore;
 
     @Column(name = "home_score", nullable = false)
+    @JsonProperty("homeScore")
     private int homeScore;
 
     public Game() {
@@ -139,6 +146,10 @@ public class Game {
         } else {
             return null;
         }
+    }
+
+    public String getSeason() {
+        return gameDate.substring(0,4);
     }
 
     @Override

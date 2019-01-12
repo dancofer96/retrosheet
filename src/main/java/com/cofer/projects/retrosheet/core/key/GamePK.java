@@ -55,6 +55,7 @@ public class GamePK implements Serializable {
     public void setHomeTeam(String homeTeam) {
         this.homeTeam = homeTeam;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

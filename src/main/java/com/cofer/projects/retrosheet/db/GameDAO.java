@@ -7,6 +7,7 @@ import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,12 @@ public class GameDAO extends AbstractDAO<Game> {
 
     public Game create(Game game) {
         return persist(game);
+    }
+
+    public List<Game> createAll(List<Game> games) {
+        List<Game> persistedGames = new ArrayList<>();
+        games.forEach(game -> persistedGames.add(this.create(game)));
+        return persistedGames;
     }
 
     @SuppressWarnings("unchecked")
